@@ -41,11 +41,13 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: {
-        safe: true
-      }
-    }),
+
+    // optimize-css-assets-webpack-plugin 与 autoprefixer 之间互相冲突
+    /*new OptimizeCSSPlugin({
+     cssProcessorOptions: {
+     safe: true
+     }
+     }),*/
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
@@ -71,11 +73,11 @@ var webpackConfig = merge(baseWebpackConfig, {
       minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
         return (
-          module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
-          ) === 0
+            module.resource &&
+            /\.js$/.test(module.resource) &&
+            module.resource.indexOf(
+                path.join(__dirname, '../node_modules')
+            ) === 0
         )
       }
     }),
@@ -100,17 +102,17 @@ if (config.build.productionGzip) {
   var CompressionWebpackPlugin = require('compression-webpack-plugin')
 
   webpackConfig.plugins.push(
-    new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp(
-        '\\.(' +
-        config.build.productionGzipExtensions.join('|') +
-        ')$'
-      ),
-      threshold: 10240,
-      minRatio: 0.8
-    })
+      new CompressionWebpackPlugin({
+        asset: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: new RegExp(
+            '\\.(' +
+            config.build.productionGzipExtensions.join('|') +
+            ')$'
+        ),
+        threshold: 10240,
+        minRatio: 0.8
+      })
   )
 }
 

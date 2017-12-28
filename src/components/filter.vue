@@ -124,7 +124,7 @@
         width: 100%;
         height: 2rem;
         background-color: #fff;
-        z-index: 100;
+        z-index: 90;
         .filter-nav{
             display: flex;
             flex-flow: row nowrap;

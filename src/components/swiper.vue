@@ -2,9 +2,11 @@
 <template>
     <swiper :options="swipOpt" ref="mySwiper">
         <swiper-slide v-for="slide in swiperSlides" :key="slide.alt">
-            <img class="swiper-lazy" :data-src="slide.imgSrc" :alt="slide.alt">
-            <div class="swiper-lazy-preloader"></div>
-            <slot name="other"></slot>
+            <a :href="slide.links">
+                <img class="swiper-lazy" :data-src="slide.src" :alt="slide.alt" style="height:100%;width:100%;">
+                <div class="swiper-lazy-preloader"></div>
+                <slot name="other"></slot>
+            </a>
         </swiper-slide>
 
         <div v-if="navBtn" class="swiper-pagination" slot="pagination"></div>
@@ -22,7 +24,7 @@
             return{
                 swiperOptionDefault: {
                     notNextTick: true,
-                    autoplay: 1500,
+                    autoplay: false,
                     autoplayDisableOnInteraction: false,
                     loop: true,
                     direction : 'horizontal',
@@ -78,6 +80,9 @@
     @import "../assets/style/swiper.css";
     .swiper-container{
         width: 100%;
-        height: 8rem;
+        height: 6.5rem;
+        .swiper-wrapper{
+            border: 1px solid red;
+        }
     }
 </style>

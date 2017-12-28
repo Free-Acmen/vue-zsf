@@ -3,10 +3,22 @@
 import Vue from 'vue'
 import VueLazyload from 'vue-lazyload'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import axios from 'axios'
 import App from './App'
 import router from './router'
 import store from './store'
 import './config/fontsize'
+
+import mobilePhone from './plugins/mobilePhone/MobilePhone'
+Object.defineProperty(Vue.prototype, '$mobile',{value: mobilePhone});
+
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+
+var instance = axios.create({
+  headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+});
+
+Vue.prototype.$http = instance
 
 // import './plugins/swiper.min'
 // Object.definePrototype(Vue.prototype, '$swiper', { value: Swiper})

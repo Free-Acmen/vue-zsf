@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import type from './mutation-type'
 import home from './modules/home'
 import filter from './modules/filter'
+import signUp from './modules/signUp'
+import productList from './modules/productList'
 
 Vue.use(Vuex)
 
@@ -17,7 +19,7 @@ const store = new Vuex.Store({
         zIndexState: false  //是否提升背景层级状态
     },
     actions: {},
-    mutations: {
+    mutations: { //公共状态操作模块
         [type.LOADING_FLAG](state, loadingFlag) {
             state.loadingFlag = loadingFlag
         },
@@ -45,7 +47,9 @@ const store = new Vuex.Store({
     },
     modules: { //各个页面的状态模块
         home,
-        filter
+        productList,
+        filter,
+        signUp
     }
 })
 

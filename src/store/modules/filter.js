@@ -1,5 +1,6 @@
-import type from '../mutation-type'
-import { hotMovie } from '../data'
+/**
+ * 筛选公共状态树
+ * */
 
 const state = {
     navIndex: -1,

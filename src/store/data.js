@@ -15,8 +15,8 @@ export const request = url => new Promise((resolve, reject) => {
     }
 })
 
+
 export const ajax = (...args) => {
-    // let agrs = [].slice.call(arguments)
     let ajaxArr = agrs.map(function(val){
         return request(val)
     })

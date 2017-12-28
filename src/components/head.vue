@@ -8,14 +8,13 @@
                 <span v-else @click="searchSwitch"></span>
             </li>
             <li :class="icon2">
-                <router-link v-if="icon2 == 'user'" to="/home"></router-link>
+                <router-link v-if="icon2 == 'user'" to="/signin"></router-link>
                 <span v-else @click="navListSwitch"></span>
             </li>
         </ul>
-
         <transition-group name="fadein">
             <!--搜索模块-->
-            <m-search v-show="searchState" key="search"></m-search>
+            <m-search v-show="searchState" key="search" :search-data="searchData"></m-search>
             <!--导航模块-->
             <m-navlist v-show="navListState" key="navlist"></m-navlist>
         </transition-group>
@@ -42,6 +41,12 @@
             icon2: {//右侧图标样式参数,默认导航
                 type: String,
                 default: "navList"
+            },
+            searchData:{
+                type: Array,
+                default: function(){
+                    return []
+                }
             }
         },
         computed: {
@@ -78,7 +83,7 @@
         padding: 0 .5rem; 
         background-color: #f6f6f6;
         border-bottom: 1px solid #ccc;
-        z-index: 100;
+        z-index: 90;
         .title{
             display: inline-block;
             width: 95px;

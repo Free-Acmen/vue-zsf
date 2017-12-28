@@ -1,9 +1,14 @@
 <template>
     <section class='m-home'>
-        <m-head icon1="phone" icon2="user"></m-head>
+        <m-head icon1="phone" icon2="user" :search-data="homeData.SearchBoxMenu"></m-head>
         <div class="padding-top">
-            <m-swiper :swiper-slides = "bannerData" :slider-btn = "btnState"></m-swiper>
+            <m-swiper :swiper-slides = "homeData.Slide.ad" :slider-btn = "btnState"></m-swiper>
         </div>
+        <!--<swipe class="my-swipe">
+            <swipe-item class="slide1"><img v-lazy="bannerData[0].imgSrc" alt=""></swipe-item>
+            <swipe-item class="slide2"><img v-lazy="bannerData[1].imgSrc" alt=""></swipe-item>
+        </swipe>-->
+
         <div class="search">
             <span class="search-text" @click="searchSwitch">搜索目的地</span>
         </div>
@@ -12,35 +17,22 @@
                 <div><a @click.prevent="navChildStateSwitch"><img src="../assets/image/index/nav-dangdi.png" alt="当地参团"><span>当地参团</span></a></div>
                 <div><router-link to="/list/activity"><img src="../assets/image/index/nav-baotuan.png" alt="当地参团"><span>定制旅游</span></router-link></div>
                 <div><router-link to="/list/ticket"><img src="../assets/image/index/nav-menpiao.png" alt="当地参团"><span>门票</span></router-link></div>
-                <div><router-link to="/"><img src="../assets/image/index/nav-jiudian.png" alt="当地参团"><span>酒店</span></router-link></div>
+                <div><router-link to=""><img src="../assets/image/index/nav-jiudian.png" alt="当地参团"><span>酒店</span></router-link></div>
             </div>
             <ul class="nav-child clear" v-show="navChildState">
-                <li><router-link to="/">美东</router-link></li>
-                <li><router-link to="/">美西</router-link></li>
-                <li><router-link to="/">夏威夷</router-link></li>
-                <li><router-link to="/">加拿大</router-link></li>
-                <li><router-link to="/">欧洲</router-link></li>
-                <li><router-link to="/">拉丁美洲</router-link></li>
-                <li><router-link to="/">澳新</router-link></li>
-                <li><router-link to="/">更多</router-link></li>
+                <li v-for="item in navList.navChild" :key="item.name"><router-link :to="{path:'/list/'+item.url}">{{item.name}}</router-link></li>
+                <li><router-link to="/list">更多</router-link></li>
             </ul>
             <div class="nav-box nav-middle">
-                <div><router-link to="/"><img src="../assets/image/index/nav-chufa.png" alt="当地参团"><span>中国出发</span></router-link></div>
-                <div><router-link to="/"><img src="../assets/image/index/nav-youlun.png" alt="当地参团"><span>邮轮</span></router-link></div>
+                <div><router-link to="/list/tours-departing-from-china"><img src="../assets/image/index/nav-chufa.png" alt="当地参团"><span>中国出发</span></router-link></div>
+                <div><router-link to="/list/cruise"><img src="../assets/image/index/nav-youlun.png" alt="当地参团"><span>邮轮</span></router-link></div>
                 <div><router-link to="/list/activity"><img src="../assets/image/index/nav-dangdi-cantuan.png" alt="当地参团"><span>当地玩乐</span></router-link></div>
-                <div><router-link to="/"><img src="../assets/image/index/nav-jiesongji.png" alt="当地参团"><span>接送机</span></router-link></div>
+                <div><router-link to="/list/transfer"><img src="../assets/image/index/nav-jiesongji.png" alt="当地参团"><span>接送机</span></router-link></div>
             </div>
             <div class="nav-bottom-box">
-                <router-link to="/"><span></span>包&nbsp;&nbsp;车</router-link>
-                <router-link to="/"><span></span>电话卡/wifi</router-link>
-                <router-link to="/"><span></span>旅游攻略</router-link>
+                <router-link v-for="item in navList.navBottom" :to="{path: '/list/'+item.url}" :key="item.name"><span></span>包&nbsp;&nbsp;车</router-link>
             </div>
         </nav>
-
-        <!--<swipe class="my-swipe">
-            <swipe-item class="slide1"><img v-lazy="bannerData[0].imgSrc" alt=""></swipe-item>
-            <swipe-item class="slide2"><img v-lazy="bannerData[1].imgSrc" alt=""></swipe-item>
-        </swipe>-->
 
         <div class="special-offer container clear">
             <header class="clear">
@@ -51,38 +43,22 @@
                 <router-link class="right" to="/">更多</router-link>
             </header>
             <ul v-show="timeBuyState">
-                <li>
-                    <router-link to="/">
-                        <img v-lazy="bannerData[0].imgSrc" alt="test">
-                        <p>[畅玩7日游] 温哥华+维农市+班芙国家公园+冰河国...</p>
-                        <p>$360 <span>起</span><i>$461</i></p>
-                        <span class="discount">7.8折</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/">
-                        <img v-lazy="bannerData[0].imgSrc" alt="test">
-                        <p>[畅玩7日游] 温哥华+维农市+班芙国家公园+冰河国...</p>
-                        <p>$360 <span>起</span><i>$461</i></p>
-                        <span class="discount">7.8折</span>
+                <li v-for="item in homeData.SpecialGroupBuy.GroupBuyList">
+                    <router-link :to="item.productsUrl">
+                        <img v-lazy="item.products_image" alt="test">
+                        <p class="ellipsis-two">{{item.mainName}}</p>
+                        <p>${{item.price}}<span>起</span> <i>${{item.final_price}}</i></p>
+                        <span class="discount">{{item.Discounts}}</span>
                     </router-link>
                 </li>
             </ul>
             <ul v-show="!timeBuyState">
-                <li>
-                    <router-link to="/">
-                        <img v-lazy="bannerData[1].imgSrc" alt="test">
-                        <p>[畅玩7日游] 温哥华+维农市+班芙国家公园+冰河国...</p>
-                        <p>$360 <span>起</span><i>$461</i></p>
-                        <span class="discount">8.8折</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/">
-                        <img v-lazy="bannerData[1].imgSrc" alt="test">
-                        <p>[畅玩7日游] 温哥华+维农市+班芙国家公园+冰河国...</p>
-                        <p>$360 <span>起</span><i>$461</i></p>
-                        <span class="discount">8.8折</span>
+                <li v-for="item in homeData.SpecialGroupBuy.SpecialList">
+                    <router-link :to="item.productsUrl">
+                        <img v-lazy="item.products_image" alt="test">
+                        <p class="ellipsis-two">{{item.mainName}}</p>
+                        <p>${{item.price}}<span>起</span> <i>${{item.final_price}}</i></p>
+                        <span class="discount">{{item.Discounts}}</span>
                     </router-link>
                 </li>
             </ul>
@@ -91,42 +67,14 @@
         <div class="hot-nation container clear">
             <header class="clear">
                 <span class="left">热门目的地</span>
-                <router-link class="right"  to="/">更多</router-link>
+                <router-link class="right"  :to="homeData.HotNation.ad[0].links">更多</router-link>
             </header>
             <section class="clear">
-                <dl>
-                    <dt><router-link to="/"><img v-lazy="bannerData[1].imgSrc" alt=""></router-link></dt>
-                    <dd><router-link to="/">
-                        <h4>黄石国家公园</h4>
-                        <p>天世界第一个国家公园</p>
-                    </router-link></dd>
-                </dl>
-                <dl>
-                    <dt><router-link to="/"><img v-lazy="bannerData[1].imgSrc" alt=""></router-link></dt>
-                    <dd><router-link to="/">
-                        <h4>家公园</h4>
-                        <p>天第一个 国家公园</p>
-                    </router-link></dd>
-                </dl>
-                <dl>
-                    <dt><router-link to="/"><img v-lazy="bannerData[1].imgSrc" alt=""></router-link></dt>
-                    <dd><router-link to="/">
-                        <h4>家公园</h4>
-                        <p>天第一个 国家公园</p>
-                    </router-link></dd>
-                </dl>
-                <dl>
-                    <dt><router-link to="/"><img v-lazy="bannerData[1].imgSrc" alt=""></router-link></dt>
-                    <dd><router-link to="/">
-                        <h4>家公园</h4>
-                        <p>天第一个 国家公园</p>
-                    </router-link></dd>
-                </dl>
-                <dl>
-                    <dt><router-link to="/"><img v-lazy="bannerData[1].imgSrc" alt=""></router-link></dt>
-                    <dd><router-link to="/">
-                        <h4>家公园</h4>
-                        <p>天第一个 国家公园</p>
+                <dl v-for="item in homeData.HotNation.ad.slice(1)" >
+                    <dt><router-link :to="item.links"><img v-lazy="item.src" alt="item.alt"></router-link></dt>
+                    <dd><router-link :to="item.links">
+                        <h4>{{item.alt}}</h4>
+                        <p>{{item.text}}</p>
                     </router-link></dd>
                 </dl>
             </section>
@@ -136,143 +84,30 @@
             <header class="title">当季热门推荐</header>
             <nav>
                 <ul class="nav-tab clear">
-                    <li :class="{'active': currentIndex == 0}" @click="hotSeasonSwitch(0)">当地参团</li>
-                    <li :class="{'active': currentIndex == 1}" @click="hotSeasonSwitch(1)">中国出发</li>
-                    <li :class="{'active': currentIndex == 2}" @click="hotSeasonSwitch(2)">当地玩乐</li>
-                    <li :class="{'active': currentIndex == 3}" @click="hotSeasonSwitch(3)">私人订制</li>
+                    <li v-for="(item, index) in seasonHotData" :class="{'active': currentIndex == item.m_id}" @click="hotSeasonSwitch(item.m_id)">{{item.m_name}}</li>
                 </ul>
                 <div class="nav-content">
-                    <ul class="clear" v-show="currentIndex == 0">
-                        <li :class="{'active': navChildIndex == 0}" @click="navChildSwitch(0)"><span>全部0</span></li>
-                        <li :class="{'active': navChildIndex == 1}" @click="navChildSwitch(1)"><span>洛杉矶</span></li>
-                        <li :class="{'active': navChildIndex == 2}" @click="navChildSwitch(2)"><span>拉斯维加斯</span></li>
-                        <li :class="{'active': navChildIndex == 3}" @click="navChildSwitch(3)"><span>旧金山</span></li>
-                        <li :class="{'active': navChildIndex == 4}" @click="navChildSwitch(4)"><span>纽约</span></li>
-                        <li :class="{'active': navChildIndex == 5}" @click="navChildSwitch(5)"><span>泰国</span></li>
-                        <li :class="{'active': navChildIndex == 6}" @click="navChildSwitch(6)"><span>阿富汗</span></li>
-                        <li :class="{'active': navChildIndex == 7}" @click="navChildSwitch(7)"><span>冰岛</span></li>
-                    </ul>
-                    <ul class="clear" v-show="currentIndex == 1">
-                        <li :class="{'active': navChildIndex == 0}" @click="navChildSwitch(0)"><span>全部1</span></li>
-                        <li :class="{'active': navChildIndex == 1}" @click="navChildSwitch(1)"><span>洛杉矶</span></li>
-                        <li :class="{'active': navChildIndex == 2}" @click="navChildSwitch(2)"><span>拉斯维加斯</span></li>
-                        <li :class="{'active': navChildIndex == 3}" @click="navChildSwitch(3)"><span>旧金山</span></li>
-                        <li :class="{'active': navChildIndex == 4}" @click="navChildSwitch(4)"><span>纽约</span></li>
-                        <li :class="{'active': navChildIndex == 5}" @click="navChildSwitch(5)"><span>泰国</span></li>
-                        <li :class="{'active': navChildIndex == 6}" @click="navChildSwitch(6)"><span>阿富汗</span></li>
-                        <li :class="{'active': navChildIndex == 7}" @click="navChildSwitch(7)"><span>冰岛</span></li>
-                    </ul>
-                    <ul class="clear" v-show="currentIndex == 2">
-                        <li :class="{'active': navChildIndex == 0}" @click="navChildSwitch(0)"><span>全部2</span></li>
-                        <li :class="{'active': navChildIndex == 1}" @click="navChildSwitch(1)"><span>洛杉矶</span></li>
-                        <li :class="{'active': navChildIndex == 2}" @click="navChildSwitch(2)"><span>拉斯维加斯</span></li>
-                        <li :class="{'active': navChildIndex == 3}" @click="navChildSwitch(3)"><span>旧金山</span></li>
-                        <li :class="{'active': navChildIndex == 4}" @click="navChildSwitch(4)"><span>纽约</span></li>
-                        <li :class="{'active': navChildIndex == 5}" @click="navChildSwitch(5)"><span>泰国</span></li>
-                        <li :class="{'active': navChildIndex == 6}" @click="navChildSwitch(6)"><span>阿富汗</span></li>
-                        <li :class="{'active': navChildIndex == 7}" @click="navChildSwitch(7)"><span>冰岛</span></li>
-                    </ul>
-                    <ul class="clear" v-show="currentIndex == 3">
-                        <li :class="{'active': navChildIndex == 0}" @click="navChildSwitch(0)"><span>全部3</span></li>
-                        <li :class="{'active': navChildIndex == 1}" @click="navChildSwitch(1)"><span>洛杉矶</span></li>
-                        <li :class="{'active': navChildIndex == 2}" @click="navChildSwitch(2)"><span>拉斯维加斯</span></li>
-                        <li :class="{'active': navChildIndex == 3}" @click="navChildSwitch(3)"><span>旧金山</span></li>
-                        <li :class="{'active': navChildIndex == 4}" @click="navChildSwitch(4)"><span>纽约</span></li>
-                        <li :class="{'active': navChildIndex == 5}" @click="navChildSwitch(5)"><span>泰国</span></li>
-                        <li :class="{'active': navChildIndex == 6}" @click="navChildSwitch(6)"><span>阿富汗</span></li>
-                        <li :class="{'active': navChildIndex == 7}" @click="navChildSwitch(7)"><span>冰岛</span></li>
+                    <ul class="clear" v-for="(item, index) in seasonHotData" v-show="currentIndex == item.m_id">
+                        <li :class="{'active': navChildIndex == 0}" @click="navChildSwitch(0)"><span>全部</span></li>
+                        <li v-for="(list, key) in item.list" :class="{'active': navChildIndex == list.m_id}" @click="navChildSwitch(list.m_id)"><span>{{list.m_name}}</span></li>
                     </ul>
                 </div>
             </nav>
-            <section class="play-line-content">
-                <dl class="clear" v-show="currentIndex == 0 && (navChildIndex == 0 || navChildIndex == 1)">
+            <section class="play-line-content" v-if="seasonHot.length">
+                <dl v-for="item in seasonHot" class="clear" v-show="currentIndex == item.basic_id && (navChildIndex == 0 || navChildIndex == item.type_id)">
                     <dt>
-                        <router-link to="/">
-                            <img v-lazy="bannerData[1].imgSrc" alt="">
-                            <span class="start-city">纽约</span>
-                            <span class="label">67%满意 | 50条评论</span>
+                        <router-link :to="item.product_url">
+                            <img v-lazy="item.img_src" alt="">
+                            <span class="start-city">{{item.info.startCityStr}}</span>
+                            <span class="label">{{item.info.productsRate}}%满意 | {{item.info.productsReviewsNum}}条评论</span>
                         </router-link>
                     </dt>
                     <dd class="clear">
-                        <router-link to="/">美国福利院+加拿大落日6日5晚游</router-link>
-                        <div class="offers clear">
-                            <span>金条</span>
-                            <span>买一送一</span>
-                            <span>不要钱</span>
+                        <router-link :to="item.product_url">{{item.product_title}}</router-link>
+                        <div class="offers clear" v-if="item.info.typeIcons.length">
+                            <span v-for="val in item.info.typeIcons">{{val.text}}</span>
                         </div>
-                        <div class="price">$100起</div>
-                    </dd>
-                </dl>
-                <dl v-show="currentIndex == 0 && (navChildIndex == 0 || navChildIndex == 2)">
-                    <dt>
-                        <router-link to="/">
-                            <img v-lazy="bannerData[1].imgSrc" alt="">
-                            <span class="start-city">纽约</span>
-                            <span class="label">67%满意 | 50条评论</span>
-                        </router-link>
-                    </dt>
-                    <dd class="clear">
-                        <router-link to="/">美国福利院+加拿大落日6日5晚游1</router-link>
-                        <div class="offers clear">
-                            <span>金条</span>
-                            <span>买一送一</span>
-                            <span>不要钱</span>
-                        </div>
-                        <div class="price">$100起</div>
-                    </dd>
-                </dl>
-                <dl v-show="currentIndex == 1 && (navChildIndex == 0 || navChildIndex == 1)">
-                    <dt>
-                        <router-link to="/">
-                            <img v-lazy="bannerData[1].imgSrc" alt="">
-                            <span class="start-city">纽约</span>
-                            <span class="label">67%满意 | 50条评论</span>
-                        </router-link>
-                    </dt>
-                    <dd class="clear">
-                        <router-link to="/">美国福利院+加拿大落日6日5晚游2</router-link>
-                        <div class="offers clear">
-                            <span>金条</span>
-                            <span>买一送一</span>
-                            <span>不要钱</span>
-                        </div>
-                        <div class="price">$100起</div>
-                    </dd>
-                </dl>
-                <dl v-show="currentIndex == 2 && (navChildIndex == 0 || navChildIndex == 2)">
-                    <dt>
-                        <router-link to="/">
-                            <img v-lazy="bannerData[1].imgSrc" alt="">
-                            <span class="start-city">纽约</span>
-                            <span class="label">67%满意 | 50条评论</span>
-                        </router-link>
-                    </dt>
-                    <dd class="clear">
-                        <router-link to="/">美国福利院+加拿大落日6日5晚游33</router-link>
-                        <div class="offers clear">
-                            <span>金条</span>
-                            <span>买一送一</span>
-                            <span>不要钱</span>
-                        </div>
-                        <div class="price">$100起</div>
-                    </dd>
-                </dl>
-                <dl v-show="currentIndex == 3 && (navChildIndex == 0 || navChildIndex == 1)">
-                    <dt>
-                        <router-link to="/">
-                            <img v-lazy="bannerData[1].imgSrc" alt="">
-                            <span class="start-city">纽约</span>
-                            <span class="label">67%满意 | 50条评论</span>
-                        </router-link>
-                    </dt>
-                    <dd class="clear">
-                        <router-link to="/">美国福利院+加拿大落日6日5晚游44</router-link>
-                        <div class="offers clear">
-                            <span>金条</span>
-                            <span>买一送一</span>
-                            <span>不要钱</span>
-                        </div>
-                        <div class="price">$100起</div>
+                        <div class="price">${{item.info.priceValue.Price}}起</div>
                     </dd>
                 </dl>
             </section>
@@ -280,21 +115,18 @@
 
         <m-foot></m-foot>
 
-        <!--<div class='home-content' ref='loading'>
-            <m-home-item v-for='item in currentData' :homeItem='item' :key='item.id'></m-home-item>
-        </div>
-        <m-loading v-show='loadingState' type='spiningDubbles' color='#11B91E' width='1.5'></m-loading>-->
-
     </section>
-</template>6
+</template>
 
-<script>
+<script type="text/ecmascript-6">
     import {mapState, mapActions} from 'vuex'
     import store from '../store'
+    import type from '../store/mutation-type'
     import mHead from '../components/head'
     import mSwiper from '../components/swiper'
     import mLoading from '../components/mLoading/mLoading'
     import mFoot from '../components/mFooter'
+    import ajaxUrl from '../store/ajaxUrl'
 
     import banner1 from '../assets/image/index/banner-1.jpg'
     import banner2 from '../assets/image/index/banner-2.jpg'
@@ -307,22 +139,48 @@
                 btnState: false,
                 navChildState: false,
                 bannerData:[{imgSrc: banner1, alt: "banner1"}, {imgSrc: banner2, alt: "banner2"}],
+                navList: {
+                    navTop: ['private_group', 'hotels', 'ticket'],
+                    navChild: [{url: 'east-coast', name: '美东'}, {url: 'west-coast', name: '美西'}, {
+                        url: 'hawaii',
+                        name: '夏威夷'
+                    }, {url: 'canada', name: '加拿大'}, {url: 'europe', name: '欧洲'}, {
+                        url: 'latin-america-tours',
+                        name: '拉丁美洲'
+                    }, {url: 'australia-new-zealand', name: '澳新'}],
+                    navMiddle: ['tours-departing-from-china', 'cruise', 'activity', 'transfer'],
+                    navBottom: [{url:'baoche', name: '包&nbsp;&nbsp;车'}, {url:'wifi',name:'电话卡/wifi'}, {url:'news',name:'旅游攻略'}]
+                },
                 timeBuyState: true,
-                currentIndex: 0,
-                navChildIndex: 0
+                currentIndex: 2,
+                navChildIndex: 0,
+                seasonHotData: [],
+                seasonHot: []
             }
         },
         created(){
-
+            this.$http.get(ajaxUrl.homeSeasonHot).then( response => {
+                this.seasonHotData = response.data.recommendType
+                let data = response.data.recommendType
+                for (var i = 0; i < data.length; i++) {
+                    for (var j = 0; j < data[i].list.length; j++) {
+                        if(Object.prototype.toString.call(data[i]['list'][j].product_list) === '[object Array]'){
+                            for (var k = 0; k < data[i]['list'][j].product_list.length; k++) {
+                                this.seasonHot.push(data[i]['list'][j].product_list[k])
+                            }
+                        }
+                    }
+                }
+            })
         },
         mounted(){
-
-        },
-        watch: {
-
+            console.log(this.homeData)
         },
         computed:{
             ...mapState({
+                homeData(state){
+                    return state.home.homeData
+                },
                 searchState(state){
                     return state.searchState;
                 }
@@ -351,7 +209,7 @@
     }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss' scoped rel="stylesheet/scss">
     @import '../assets/style/swipe.css';
     .m-home{
         font-size: .6rem;
@@ -502,6 +360,7 @@
             }
         }
 
+
         .container{
             padding: 0 .5rem;
             background-color: #f6f6f6;
@@ -537,7 +396,9 @@
                     width: 100%;
                 }
             }
-            p{}
+            p{
+
+            }
             .discount{
                 position: absolute;
                 top:0;
@@ -660,8 +521,18 @@
             }
             .play-line-content{
                 dl{
+                    margin-bottom: .5rem;
                     dt{
                         position: relative;
+                        a{
+                            display: block;
+                            width: 100%;
+                            height: 8.7rem;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
                         .start-city{
                             position: absolute;
                             top: 6.7%;

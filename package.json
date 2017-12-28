@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "vue": "^2.4.2",
     "vue-awesome-swiper": "^2.6.2",
     "vue-lazyload": "^1.1.3",

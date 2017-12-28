@@ -1,0 +1,72 @@
+/*.area-wrap-two {font:1em/30px Arial, Helvetica, sans-serif;}*/
+.area-wrap-two .areas{background-color:#ffffff;}
+.area-wrap-two .areas input{background-color:#ffffff;}
+.area-wrap-two .con {position:fixed;left:0;bottom:0;width:100%;display:none;z-index:9999;background:#fff;border:1px solid #cbcbcb;}
+.area-wrap-two .con div.search {height:36px;padding: 0 10px;box-sizing: border-box;}
+.area-wrap-two .con div.search p{height: 100%;border-bottom: 1px solid #dedcdc;padding-left: 10px;}
+.area-wrap-two .con div.search p:before,.area-wrap-two .con div.search p:after{content: "";display: table;clear: both;}
+.area-wrap-two .con div.search input.search_ipt{border:1px solid #ccc;height:2em;width:50%;}
+.area-wrap-two .con div.search span.title{float: left;height: 100%;box-sizing: border-box;padding-top: 13px;line-height: 100%;font-size: 14px;color:#000;}
+.area-wrap-two .con div.search span.done_btn{float:right;padding:0 1.5em;font-size:1.5em;height: 100%;line-height: 120%;display: none;}
+.area-wrap-two dl.area-con-dl {overflow-y: auto;overflow-x: hidden;width:100%;-webkit-overflow-scrolling: touch;padding: 3px 10px 0 10px;box-sizing: border-box; height:145px;border-bottom: none; }
+.area-wrap-two dl.area-con-dl dd{font-size:15px;color:#000000;position: relative;padding-left: 39px;line-height: 100%;padding-top: 10px;padding-bottom: 10px;border-bottom: none; }
+.area-wrap-two dl.area-con-dl dd b.radio-ico{display: inline-block;width: 21px;height: 20px;background: url(http://www.usitrip.com/tpl/m/image/radio-btn.png) no-repeat left top;
+    background-size: 50px 20px;position: absolute;left:10px;top:7px;
+}
+.area-wrap-two dl.area-con-dl dd.hover b.radio-ico{background-position:right top;}
+.area-wrap-two dl.area-con-dl dd input[type='radio']{display: none;}
+.area-wrap-two dl.area-con-dl dd i{width:24px;height:11px;background:url(http://www.usitrip.com/tpl/www/js/usitripjs/widget/images/area.png) no-repeat 0 0;display:inline-block;*display:inline;*zoom:1;vertical-align: middle; margin-top: -4px;margin-left: 6px;}
+.area-wrap-two dl.area-con-dl dd span {padding-right:11px;height: auto !important;}
+.area-wrap-two dl.area-con-dl dd.highlight {background:#eee;}
+.area-wrap-two dl.area-con-dl dd.spl {background:#cbcbcb;height:1px;padding:0 0;margin:2px 0;}
+.area-wrap-two dl.area-con-dl .common {}
+.area-wrap-two dl.area-con-dl span {display:inline-block;*display:inline;*zoom:1;}
+.area-wrap-two dl.area-con-dl em {display:inline-block;*display:inline;*zoom:1;}
+
+
+.area-wrap-two .area-box .areas{display:inline-block;*display:inline;*zoom:1;padding:0 5px 0 8px;position: relative;height:23px;line-height:23px;vertical-align:top;border: none;text-align: center; }
+
+.area-wrap-two .area-box i.flag{width:20px;height:11px;vertical-align:middle;background:url(http://www.usitrip.com/tpl/www/js/usitripjs/widget/images/area.png) no-repeat 0 0;display:inline-block;*display:inline;*zoom:1;_overflow:hidden;}
+.area-wrap-two .area-box input.areaname{width:50px;height:28px;*height:27px;line-height:28px \9;*line-height:27px; border:0;color:#333;vertical-align:middle \9;}
+.area-wrap-two .area-box em{width:0;margin:10px 4px 0;border-left:4px solid #fff;border-right:4px solid #fff;border-top:4px solid #000;display:inline-block;*display:inline;*zoom:1;vertical-align: top;}
+.area-wrap-two .area-box input.phone{font-size:14.4px;height:25px;color:#333;border:0px solid #bbb!important;display: inline-block;text-indent: 3px !important;}
+.area-wrap-two .area-box .tips {padding-left:5px;*height:30px;*line-height:30px;*display:inline;*zoom:1;*vertical-align:top;}
+.area-wrap-two .area-box .areas:hover, .area-wrap-two .area-box .phone:hover{border-color:#4d90fe;}
+
+.area-wrap-two .phone-box {border-top:1px solid #ddd;border-right:1px solid #bbb;border-bottom:1px solid #bbb;display:inline-block;*display:inline;*zoom:1;height:23px;line-height:23px;position: relative;background-color: #fff;}
+.area-wrap-two .phone-box:before,.area-wrap-two .phone-box:after{content: '';display: table;clear: both;}
+.area-wrap-two .phone-box .JS-code{ padding:1px 4px 1px 5px;box-sizing: border-box;float: left;max-width: 34%;}
+.area-wrap-two .phone-box .JS-tips{ position: absolute;top:1px;left:38px;display: none !important;}
+.newMobilePhoneBg{width: 100%;background: rgba(0,0,0,0.6);position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 100;cursor: pointer;display: none;}
+
+
+/*手机号码重置go*/
+.area-wrap-two .area-box .tips{display: none !important;}
+
+.area-wrap-two .phone-box{border: none;}
+.area-wrap-two .area-box .areas .areaname{display: inline-block;overflow: hidden;height: 100%;}
+.area-wrap-two .area-box i.flag{vertical-align: top;}
+
+.area-wrap-two .area-box .areas:after{
+    position: absolute;content: '';width: 1px;background-color: #dbdbdb;right: 0;height: 60%;top: 7px;
+}
+/*手机号码重置end*/
+
+@media screen and (min-width:640px) {
+    .area-wrap-two .phone-box .JS-tips{left: 76px;}
+    .area-wrap-two .con div.search{height: 71px;padding: 0 20px;}
+    .area-wrap-two .con div.search p{padding-left: 20px;}
+    .area-wrap-two .con div.search span.title{padding-top: 26px;font-size: 28px;}
+    .area-wrap-two dl.area-con-dl{padding: 6px 20px 0 20px;height: 290px;}
+    .area-wrap-two dl.area-con-dl dd{/*height: 70px;line-height: 70px;*/font-size: 30px;padding-left: 78px;padding-top: 20px;padding-bottom: 20px;}
+    .area-wrap-two dl.area-con-dl dd b.radio-ico{;height:40px;width: 41px;background-size: 100px 40px;left: 20px;top: 14px;}
+    .area-wrap-two dl.area-con-dl dd span{padding-right: 22px;height: auto !important;}
+    .area-wrap-two .area-box{height: 60px;line-height: 60px;}
+    .area-wrap-two .area-box em{margin: 0 8px;margin-top: 28px;border-left: 8px solid rgba(255, 255, 255, 0);border-right: 8px solid rgba(255, 255, 255, 0);border-top: 8px solid #000;}
+    .area-wrap-two .area-box input.phone{height: 64px;line-height: 64px;text-indent: 0 !important;}
+    .area-wrap-two .area-box .areas{padding: 4px 10px 4px 16px;height: 64px;line-height: 64px;}
+    .area-wrap-two .area-box .areas:after{top: 18px;}
+    .area-wrap-two .phone-box{height: 64px;line-height: 64px;}
+    .area-wrap-two .phone-box .JS-code{height: 100%;padding: 2px 8px 2px 10px;}
+}
+

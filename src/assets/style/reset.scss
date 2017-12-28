@@ -53,6 +53,7 @@ body.modal-open{
     background-color: #555;
 }
 
+
 input[type="button"], input[type="submit"], input[type="search"], input[type="reset"] {
     -webkit-appearance: none;
 }
@@ -104,6 +105,13 @@ html,body{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.ellipsis-two{
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .padding-top{
     padding-top: 2.5rem;

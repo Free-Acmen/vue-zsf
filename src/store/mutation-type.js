@@ -6,5 +6,6 @@ export default {
     CURRENT_MOVIE: 'CURRENT_MOVIE', // 当前浏览电影条目
     CURRENT_TAG: 'CURRENT_TAG', // 获取标签页数据
     CURRENT_SEE_MORE: 'CURRENT_SEE_MORE', // 查看更多
-    REVIEWS: 'REVIEWS' //评论数据
+    REVIEWS: 'REVIEWS', //评论数据
+    DOMAIN: 'http://testm.usitrip.com'
 }

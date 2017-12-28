@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import {mapState} from 'vuex'
 import mError from './components/error'
 import mLoading from './components/loading'
@@ -24,7 +24,6 @@ import store from './store'
 export default {
     data(){
         return {
-
         }
     },
     components: {
@@ -38,21 +37,21 @@ export default {
     methods:{
         //背景弹出层状态逻辑
         bgSwitch(){
-            store.commit('phoneStateC', false)
-            store.commit('publicBgStateC')
-            store.commit('zIndexStateC', false)
-            store.commit("navIndex", -1)
+            store.commit('phoneStateC', false);
+            store.commit('publicBgStateC');
+            store.commit('zIndexStateC', false);
+            store.commit("navIndex", -1);
+            store.commit('changeOrder', false);
+
         }
     }
 }
 </script>
 
-<style lang='scss'>
+<style rel="stylesheet/scss" lang='scss'>
     @import './assets/style/reset';
     #m-app{
-        font-size: .6rem;
-        max-width: 720px;
-        margin: 0 auto;
+        font-size: .6rem;max-width: 720px;margin: 0 auto;min-height: 100%;
     }
     .router-fade-enter-active, .router-fade-leave-active {
         transition: opacity .3s;
@@ -62,14 +61,10 @@ export default {
     }
 
     .phone-enter, .phone-leave-to{
-        opacity: 0;
-        -moz-transform: translate(0, 160px);
-        -webkit-transform: translate(0, 160px);
-        transform: translate(0, 160px);
+        opacity: 0;-moz-transform: translate(0, 160px);-webkit-transform: translate(0, 160px);transform: translate(0, 160px);
     }
     .phone-enter-active, .phone-leave-active{
-        -webkit-transform: all .3s linear;
-        transition: all .3s linear;
+        -webkit-transition: all .3s linear;transition: all .3s linear;
     }
     .phone-enter-to, .phone-leave{
         opacity: 1;
@@ -79,19 +74,12 @@ export default {
         opacity: 0;
     }
     .fadein-enter-active{
-        -webkit-transform: all .3s linear;
-        transition: all .3s linear;
+        -webkit-transition: all .3s linear;transition: all .3s linear;
     }
 
     //公共背景弹出层样式
     .public-bg{
-       position: fixed;
-       top: 0;
-       left: 0;
-       right: 0;
-       bottom: 0;
-       z-index: 80;
-       background-color: rgba(0, 0, 0, .6);
+       position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 80;background-color: rgba(0, 0, 0, .6);
        &.bg-zindex{
           z-index: 340;
        }

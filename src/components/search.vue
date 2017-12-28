@@ -4,52 +4,23 @@
             <span class="close" @click="searchClose"></span>
             <span>选择、搜索目的地</span>
             <div class="search-input" :class="{'search-input-focus': searchFocus}">
-                <input type="text" placeholder="请输入出发城市或想去的景点" @focus="focusFuc" @blur="blurFuc">
+                <input type="text" placeholder="请输入出发城市或想去的景点" v-model="searchKeyWord" @focus="focusFuc" @blur="blurFuc">
                 <span class="search-btn">搜索</span>
             </div>
         </header>
         <section class="section">
-            <div class="default-list clear">
-                <dl class="clear">
-                    <dt>美西</dt>
-                    <dd><router-link to="/">纽约</router-link></dd>
-                    <dd>华盛顿</dd>
-                    <dd>纽约</dd>
-                    <dd>纽约</dd>
-                    <dd>华盛顿</dd>
-                    <dd>纽约</dd>
-                </dl>
-                <dl class="clear">
-                    <dt>美果冻还啊</dt>
-                    <dd>纽约</dd>
-                    <dd>华盛顿</dd>
-                    <dd>纽约</dd>
-                    <dd>纽约</dd>
-                    <dd>华盛顿</dd>
-                    <dd>纽约</dd>
-                </dl>
-                <dl class="clear">
-                    <dt>美果冻还啊</dt>
-                    <dd><router-link to="/">纽约</router-link></dd>
-                    <dd>华盛顿</dd>
-                    <dd>纽约</dd>
-                    <dd>纽约</dd>
-                    <dd>华盛顿</dd>
-                    <dd>纽约</dd>
-                    <dd>纽约</dd>
-                    <dd>华盛顿</dd>
-                    <dd>纽约</dd>
+            <div class="default-list clear" v-if="searchDefault.length"  v-show="!searchResult.length">
+                <dl class="clear" v-for="item in searchDefault[0].list">
+                    <dt>{{item.tbmd_name}}</dt>
+                    <dd v-for="list in item.list"><router-link to="/">{{list.tbmd_name}}</router-link></dd>
                 </dl>
             </div>
-            <div class="result-list">
-                <p>浪漫巴黎的约会</p>
-                <p>激情四射的冲浪</p>
-                <p>浪漫巴黎的约会</p>
-                <p>激情四射的冲浪</p>
-                <p>浪漫巴黎的约会</p>
-                <p>激情四射的冲浪</p>
-                <p>浪漫巴黎的约会</p>
-                <p>激情四射的冲浪</p>
+            <div class="result-list" v-if="searchResult.length">
+                <p v-for="item in searchResult"  :data-searchTid="item.type_id">
+                    <span>{{item.title}}</span>
+                    <span class="" v-if="item.text != '&nbsp;'">{{item.text}}</span>
+                    <span class="right">约{{item.count}}个结果</span>
+                </p>
             </div>
         </section>
     </div>
@@ -58,19 +29,64 @@
 <script>
     import {mapState} from 'vuex'
     import store from '../store'
+    import type from '../store/mutation-type'
+    import ajaxUrl from '../store/ajaxUrl'
+
     export default{
         data(){
             return {
-                searchFocus: false
+                searchFocus: false,
+                ResultList: false,
+                searchKeyWord: '',
+                searchDefault: [],
+                searchResult: [],
+                debounce: 500,
+                timer: null
+            }
+        },
+        props:{
+            searchData: {
+                type: Array
+            }
+        },
+        created(){
+            if(this.searchData.length>0){
+                this.searchDefault = this.searchData
+            }else if(this.home.homeData.length>0){
+                this.searchDefault = this.home.homeData.SearchBoxMenu
+            }else{
+                this.$http.get(ajaxUrl.searchDeafut).then( response => {
+                    this.searchDefault = response.data.SearchBoxMenu
+                })
+            }
+        },
+        watch: {
+            searchKeyWord(val, old){
+                clearTimeout(this.timer)
+                    this.timer = setTimeout(() => {
+                        let url = ajaxUrl.searchKey(val)
+                        this.$http.get(url).then(response => {
+                            this.searchResult = []
+                            response.data.rows.forEach((val) => {
+                                if(typeof val.sub_data != 'undefined'){
+                                    val.sub_data.forEach(item => {
+                                        item.title=val.text
+                                        this.searchResult.push(item)
+                                    })
+                                }
+                            })
+                        })
+                }, this.debounce)
             }
         },
         computed:{
-             ...mapState(["searchState"])
+             ...mapState(["searchState","home"])
         },
         methods: {
             searchClose(){
                 this.modalOpen.beforeClose()
                 store.commit("searchStateC")
+                this.searchKeyWord = ''
             },
             focusFuc(){
                 this.searchFocus = true
